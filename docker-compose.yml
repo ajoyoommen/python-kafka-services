@@ -37,7 +37,7 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
 
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka:9092 --create --topic topic-app-logs --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka:9092 --create --topic new_orders --replication-factor 1 --partitions 1
 
       echo -e 'Successfully created the following topics:'
       kafka-topics --bootstrap-server kafka:  9092 --list
@@ -49,13 +49,19 @@ services:
     environment:
       POSTGRES_PASSWORD: example
 
+  new_orders:
+    build: new_orders/
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_SERVER: kafka:9092
+      KAFKA_TOPIC: new_orders
+
   orders_service:
     build: orders_service/
     depends_on:
       - kafka
       - database
-    deploy:
-        replicas: 1
     environment:
       KAFKA_SERVER: kafka:9092
-      KAFKA_TOPIC: topic-app-logs
+      KAFKA_TOPIC: new_orders

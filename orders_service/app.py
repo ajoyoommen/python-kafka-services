@@ -1,5 +1,7 @@
 import json
 import logging
+from datetime import datetime
+from time import sleep
 
 import config
 from kafka import KafkaConsumer
@@ -10,6 +12,9 @@ logger.setLevel(logging.INFO)
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
 logger.addHandler(stream_handler)
+
+
+sleep(20)
 
 # KAFKA CONSUMER SETUP
 consumer = KafkaConsumer(
@@ -26,7 +31,7 @@ counter = 0
 for message in consumer:
     message = message.value
     data = message.get("order")
-    logger.info("Received: %s", data)
+    logger.info("Received [%s]: %s", datetime.now(), message)
     counter += 1
     if counter % 5000 == 0:
         logger.info("Indexed %s logs", counter)
