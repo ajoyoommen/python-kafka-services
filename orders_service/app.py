@@ -31,6 +31,7 @@ counter = 0
 for message in consumer:
     message = message.value
     data = message.get("order")
+    data["status"] = "PENDING"
     logger.info("Received [%s]: %s", datetime.now(), message)
     counter += 1
     if counter % 5000 == 0:

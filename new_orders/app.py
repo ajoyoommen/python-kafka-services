@@ -23,9 +23,13 @@ producer = KafkaProducer(
 
 items = ["bread", "cake", "tea", "coffee"]
 
+order_id = 1
+
 while True:
-    order = {}
+    order = {"id": order_id}
     for item in items:
         order[item] = random.choice([0, 1, 2, 3])
+    logger.info("Order created: %s", order)
     producer.send(config.KAFKA_TOPIC, value={"order": order})
     sleep(1)
+    order_id += 1
