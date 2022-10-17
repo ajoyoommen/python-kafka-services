@@ -43,12 +43,6 @@ services:
       kafka-topics --bootstrap-server kafka:  9092 --list
       "
 
-  database:
-    image: postgres
-    container_name: database
-    environment:
-      POSTGRES_PASSWORD: example
-
   new_orders:
     build: new_orders/
     depends_on:
@@ -61,7 +55,6 @@ services:
     build: orders_service/
     depends_on:
       - kafka
-      - database
     environment:
       KAFKA_SERVER: kafka:9092
       KAFKA_TOPIC: new_orders
