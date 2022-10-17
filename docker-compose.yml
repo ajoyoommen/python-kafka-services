@@ -52,8 +52,8 @@ services:
       KAFKA_SERVER: kafka:9092
       KAFKA_TOPIC_NEW_ORDERS: new_orders
 
-  orders_service:
-    build: orders_service/
+  orders_processing:
+    build: orders_processing/
     depends_on:
       - kafka
     environment:
@@ -61,8 +61,8 @@ services:
       KAFKA_TOPIC_NEW_ORDERS: new_orders
       KAFKA_TOPIC_UNPROCESSED_ORDERS: unprocessed_orders
 
-  order_processing:
-    build: order_processing/
+  orders_dispatch:
+    build: orders_dispatch/
     depends_on:
       - kafka
     environment:

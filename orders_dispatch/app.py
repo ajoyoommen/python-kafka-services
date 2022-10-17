@@ -1,12 +1,11 @@
 import json
 import logging
-from datetime import datetime
 from time import sleep
 
 import config
 from kafka import KafkaConsumer
 
-logger = logging.getLogger("order_processing")
+logger = logging.getLogger("orders_dispatch")
 logger.setLevel(logging.INFO)
 
 stream_handler = logging.StreamHandler()
@@ -30,4 +29,4 @@ logger.info("Topics: %s", consumer.topics())
 counter = 0
 for message in consumer:
     data = message.value
-    logger.info("Dispatched: %s", datetime.now(), message)
+    logger.info("Dispatched: %s", data)

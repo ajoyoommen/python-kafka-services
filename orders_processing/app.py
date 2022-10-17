@@ -5,7 +5,7 @@ from time import sleep
 import config
 from kafka import KafkaConsumer, KafkaProducer
 
-logger = logging.getLogger("orders_service")
+logger = logging.getLogger("orders_processing")
 logger.setLevel(logging.INFO)
 
 stream_handler = logging.StreamHandler()
